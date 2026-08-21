@@ -8,6 +8,8 @@
     recent_changes: 1000,
     total: 4000,
   };
+  const THEME_STORAGE_KEY = "opstriage-theme";
+  const themePreference = window.matchMedia("(prefers-color-scheme: dark)");
 
   const SAMPLE_INCIDENT = {
     service_name: "Payment API",
@@ -32,6 +34,8 @@
     header: document.querySelector("[data-header]"),
     navigation: document.querySelector("[data-navigation]"),
     menuToggle: document.querySelector("[data-menu-toggle]"),
+    themeToggle: document.querySelector("[data-theme-toggle]"),
+    themeLabel: document.querySelector("[data-theme-label]"),
     submit: document.querySelector("[data-submit]"),
     submitLabel: document.querySelector("[data-submit-label]"),
     sample: document.querySelector("[data-sample]"),
@@ -61,6 +65,52 @@
   let toastTimer = null;
 
   class AppError extends Error {}
+
+  function readStoredTheme() {
+    try {
+      const theme = window.localStorage.getItem(THEME_STORAGE_KEY);
+      return theme === "dark" || theme === "light" ? theme : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function applyTheme(theme, source = "system") {
+    const isDark = theme === "dark";
+    const actionLabel = isDark ? "라이트 모드로 전환" : "다크 모드로 전환";
+
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    ui.themeToggle?.setAttribute("aria-pressed", String(isDark));
+    ui.themeToggle?.setAttribute("aria-label", actionLabel);
+    ui.themeToggle?.setAttribute("title", actionLabel);
+    if (ui.themeLabel) ui.themeLabel.textContent = actionLabel;
+
+    const themeColor = document.querySelector('meta[name="theme-color"]');
+    themeColor?.setAttribute("content", isDark ? "#07101c" : "#f5f7f8");
+
+    document.dispatchEvent(
+      new CustomEvent("opstriage:theme-change", {
+        detail: { theme, source },
+      }),
+    );
+  }
+
+  function saveTheme(theme) {
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {
+      // The visible theme still changes even when storage is unavailable.
+    }
+  }
+
+  function toggleTheme() {
+    const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+    saveTheme(nextTheme);
+    applyTheme(nextTheme, "user");
+    showToast(nextTheme === "dark" ? "다크 모드를 적용했습니다." : "라이트 모드를 적용했습니다.");
+  }
 
   function getPayload() {
     return Object.fromEntries(
@@ -402,6 +452,11 @@
   });
 
   ui.copy.addEventListener("click", copyResult);
+  ui.themeToggle?.addEventListener("click", toggleTheme);
+
+  themePreference.addEventListener?.("change", (event) => {
+    if (!readStoredTheme()) applyTheme(event.matches ? "dark" : "light", "system");
+  });
 
   ui.menuToggle?.addEventListener("click", () => {
     const expanded = ui.menuToggle.getAttribute("aria-expanded") === "true";
@@ -439,6 +494,7 @@
 
   const updateHeader = () => ui.header?.classList.toggle("is-scrolled", window.scrollY > 24);
   window.addEventListener("scroll", updateHeader, { passive: true });
+  applyTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light", readStoredTheme() ? "stored" : "system");
   updateHeader();
   updateCounters();
 })();

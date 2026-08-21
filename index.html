@@ -7,8 +7,9 @@
       name="description"
       content="장애 증상과 로그를 입력하면 초동 대응에 필요한 원인 가설, 확인 항목, 완화 방안과 공지 초안을 정리하는 AI 서비스"
     />
-    <meta name="theme-color" content="#08111f" />
+    <meta name="theme-color" content="#f5f7f8" />
     <title>OpsTriage — AI 장애 초동 대응</title>
+    <script src="/js/theme-init.js"></script>
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/app.js" defer></script>
   </head>
@@ -22,17 +23,6 @@
           <span>OpsTriage</span>
         </a>
 
-        <button
-          class="menu-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="primary-navigation"
-          data-menu-toggle
-        >
-          <span class="sr-only">메뉴 열기</span>
-          <span></span><span></span>
-        </button>
-
         <nav class="primary-navigation" id="primary-navigation" aria-label="주요 메뉴" data-navigation>
           <a class="is-active" href="#home">Home</a>
           <a href="#incident-analyzer">Analyzer</a>
@@ -40,10 +30,36 @@
           <a href="#about">About &amp; FAQ</a>
         </nav>
 
-        <a class="header-cta" href="#incident-analyzer">
-          분석 시작
-          <span aria-hidden="true">↗</span>
-        </a>
+        <div class="header-actions">
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-pressed="false"
+            aria-label="다크 모드로 전환"
+            title="다크 모드로 전환"
+            data-theme-toggle
+          >
+            <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
+            <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
+            <span class="sr-only" data-theme-label>다크 모드로 전환</span>
+          </button>
+
+          <a class="header-cta" href="#incident-analyzer">
+            분석 시작
+            <span aria-hidden="true">↗</span>
+          </a>
+
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-navigation"
+            data-menu-toggle
+          >
+            <span class="sr-only">메뉴 열기</span>
+            <span></span><span></span>
+          </button>
+        </div>
       </div>
     </header>
 
