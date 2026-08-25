@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="장애 증상과 로그를 입력하면 초동 대응에 필요한 원인 가설, 확인 항목, 완화 방안과 공지 초안을 정리하는 AI 서비스"
+    />
+    <meta name="theme-color" content="#f5f7f8" />
+    <title>OpsTriage — AI 장애 초동 대응</title>
+    <script src="/js/theme-init.js"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">본문으로 바로가기</a>
+
+    <header class="site-header" data-header>
+      <div class="container header-inner">
+        <a class="brand" href="#home" aria-label="OpsTriage 홈으로 이동">
+          <span class="brand-mark" aria-hidden="true"><span></span></span>
+          <span>OpsTriage</span>
+        </a>
+
+        <nav class="primary-navigation" id="primary-navigation" aria-label="주요 메뉴" data-navigation>
+          <a class="is-active" href="#home">Home</a>
+          <a href="#incident-analyzer">Analyzer</a>
+          <a href="#response-guide">Response Guide</a>
+          <a href="#about">About &amp; FAQ</a>
+        </nav>
+
+        <div class="header-actions">
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-pressed="false"
+            aria-label="다크 모드로 전환"
+            title="다크 모드로 전환"
+            data-theme-toggle
+          >
+            <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
+            <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
+            <span class="sr-only" data-theme-label>다크 모드로 전환</span>
+          </button>
+
+          <a class="header-cta" href="#incident-analyzer">
+            분석 시작
+            <span aria-hidden="true">↗</span>
+          </a>
+
+          <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-navigation"
+            data-menu-toggle
+          >
+            <span class="sr-only">메뉴 열기</span>
+            <span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero section-shell" id="home" data-section>
+        <div class="hero-glow hero-glow-one" aria-hidden="true"></div>
+        <div class="hero-glow hero-glow-two" aria-hidden="true"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow"><span></span> AI-assisted incident response</p>
+            <h1>장애의 첫 <em>15분</em>을<br />더 선명하게.</h1>
+            <p class="hero-description">
+              흩어진 증상과 로그를 입력하면 AI가 원인 가설부터 우선 확인 항목,
+              완화 방안과 팀 공지 초안까지 하나의 대응 플랜으로 정리합니다.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#incident-analyzer">
+                장애 분석 시작하기
+                <span aria-hidden="true">→</span>
+              </a>
+              <a class="button button-ghost" href="#response-guide">대응 가이드 보기</a>
+            </div>
+            <ul class="trust-list" aria-label="서비스 운영 원칙">
+              <li><span aria-hidden="true">✓</span> 입력 정보 미저장</li>
+              <li><span aria-hidden="true">✓</span> 사람이 최종 판단</li>
+              <li><span aria-hidden="true">✓</span> 한국어 분석</li>
+            </ul>
+          </div>
+
+          <div class="signal-console" aria-label="OpsTriage 분석 흐름 예시">
+            <div class="console-topbar">
+              <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span>INCIDENT / PAYMENT-API</span>
+              <span class="live-indicator"><i></i> LIVE</span>
+            </div>
+            <div class="console-body">
+              <div class="incident-head">
+                <div>
+                  <p>DETECTED 14:28:06</p>
+                  <h2>Payment API latency spike</h2>
+                </div>
+                <strong>SEV-2</strong>
+              </div>
+
+              <div class="signal-chart" aria-hidden="true">
+                <div class="chart-label"><span>Response time</span><b>2,840 ms</b></div>
+                <div class="chart-grid"></div>
+                <div class="chart-bars">
+                  <i style="--h: 24%"></i><i style="--h: 31%"></i><i style="--h: 27%"></i>
+                  <i style="--h: 38%"></i><i style="--h: 43%"></i><i style="--h: 68%"></i>
+                  <i style="--h: 88%"></i><i style="--h: 72%"></i><i style="--h: 92%"></i>
+                  <i style="--h: 78%"></i><i style="--h: 84%"></i><i style="--h: 64%"></i>
+                </div>
+              </div>
+
+              <div class="console-event">
+                <span class="event-icon">01</span>
+                <div>
+                  <p>PRIMARY HYPOTHESIS</p>
+                  <strong>Upstream response delay after deployment</strong>
+                </div>
+                <span class="confidence">HIGH SIGNAL</span>
+              </div>
+              <div class="console-event">
+                <span class="event-icon">02</span>
+                <div>
+                  <p>FIRST CHECK</p>
+                  <strong>Compare error onset with release timeline</strong>
+                </div>
+                <span class="event-arrow" aria-hidden="true">↗</span>
+              </div>
+            </div>
+            <div class="console-footer">
+              <span>Signals organized</span>
+              <div><i></i><i></i><i></i><i></i><i></i></div>
+              <strong>5 / 5</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="analyzer-section section-shell" id="incident-analyzer" data-section>
+        <div class="container">
+          <div class="section-heading split-heading">
+            <div>
+              <p class="eyebrow"><span></span> Incident analyzer</p>
+              <h2>흩어진 신호를<br />대응 순서로 바꾸세요.</h2>
+            </div>
+            <p>
+              현재 확인된 사실만 입력하세요. OpsTriage가 입력 내용을 요약하고
+              안전한 초동 대응 체크리스트를 구성합니다.
+            </p>
+          </div>
+
+          <div class="analyzer-layout">
+            <form class="incident-form panel" id="incident-form" novalidate>
+              <div class="panel-heading">
+                <div>
+                  <span class="panel-index">01</span>
+                  <div>
+                    <p class="panel-kicker">Incident input</p>
+                    <h3>장애 정보 입력</h3>
+                  </div>
+                </div>
+                <span class="required-note"><i></i> 필수 항목</span>
+              </div>
+
+              <div class="field-row">
+                <div class="field-group">
+                  <label for="service-name">서비스명 <span>선택</span></label>
+                  <input
+                    id="service-name"
+                    name="service_name"
+                    type="text"
+                    maxlength="100"
+                    placeholder="예: Payment API"
+                    autocomplete="off"
+                  />
+                  <div class="field-meta">
+                    <p class="field-error" id="service-name-error"></p>
+                    <span><b data-count="service_name">0</b>/100</span>
+                  </div>
+                </div>
+
+                <div class="field-group">
+                  <label for="environment">운영 환경 <strong>*</strong></label>
+                  <select id="environment" name="environment" aria-describedby="environment-error">
+                    <option value="">환경 선택</option>
+                    <option value="Production">Production</option>
+                    <option value="Staging">Staging</option>
+                    <option value="Development">Development</option>
+                  </select>
+                  <div class="field-meta">
+                    <p class="field-error" id="environment-error"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="symptom">장애 증상 <strong>*</strong></label>
+                <textarea
+                  id="symptom"
+                  name="symptom"
+                  rows="5"
+                  maxlength="2000"
+                  placeholder="언제부터, 어떤 기능에서, 어떤 영향이 발생했는지 입력해주세요."
+                  aria-describedby="symptom-hint symptom-error"
+                ></textarea>
+                <div class="field-meta">
+                  <p class="field-hint" id="symptom-hint">관찰된 사실과 사용자 영향을 함께 적으면 더 정확합니다.</p>
+                  <p class="field-error" id="symptom-error"></p>
+                  <span><b data-count="symptom">0</b>/2,000</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="logs">로그 또는 오류 메시지 <span>선택</span></label>
+                <textarea
+                  class="code-input"
+                  id="logs"
+                  name="logs"
+                  rows="6"
+                  maxlength="4000"
+                  spellcheck="false"
+                  placeholder="예: upstream timed out while reading response header..."
+                  aria-describedby="logs-hint logs-error"
+                ></textarea>
+                <div class="field-meta">
+                  <p class="field-hint" id="logs-hint">토큰, 비밀번호, 개인정보는 반드시 제거해주세요.</p>
+                  <p class="field-error" id="logs-error"></p>
+                  <span><b data-count="logs">0</b>/4,000</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="recent-changes">최근 배포 및 설정 변경 <span>선택</span></label>
+                <textarea
+                  id="recent-changes"
+                  name="recent_changes"
+                  rows="3"
+                  maxlength="1000"
+                  placeholder="예: 30분 전에 애플리케이션 새 버전을 배포했습니다."
+                  aria-describedby="recent-changes-error"
+                ></textarea>
+                <div class="field-meta">
+                  <p class="field-error" id="recent-changes-error"></p>
+                  <span><b data-count="recent_changes">0</b>/1,000</span>
+                </div>
+              </div>
+
+              <div class="analysis-limit" data-total-wrap>
+                <div>
+                  <span>분석 입력 사용량</span>
+                  <strong><b data-total-count>0</b> / 4,000자</strong>
+                </div>
+                <div class="limit-track"><span data-total-bar></span></div>
+              </div>
+
+              <div class="privacy-note">
+                <span aria-hidden="true">!</span>
+                <p><strong>민감정보를 입력하지 마세요.</strong> 입력 내용은 별도로 저장하지 않으며 분석 목적으로만 전송됩니다.</p>
+              </div>
+
+              <div class="form-status" role="alert" aria-live="assertive" data-form-error hidden></div>
+
+              <div class="form-actions">
+                <button class="text-button" type="button" data-sample>샘플 불러오기</button>
+                <div>
+                  <button class="button button-secondary" type="reset">초기화</button>
+                  <button class="button button-primary analyze-button" type="submit" data-submit>
+                    <span data-submit-label>AI로 분석하기</span>
+                    <span class="button-arrow" aria-hidden="true">→</span>
+                    <span class="spinner" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <section class="result-panel panel" aria-labelledby="result-title" aria-live="polite">
+              <div class="panel-heading">
+                <div>
+                  <span class="panel-index">02</span>
+                  <div>
+                    <p class="panel-kicker">Triage report</p>
+                    <h3 id="result-title" tabindex="-1">분석 결과</h3>
+                  </div>
+                </div>
+                <button class="copy-button" type="button" data-copy hidden>
+                  <span aria-hidden="true">⧉</span> 결과 복사
+                </button>
+              </div>
+
+              <div class="result-empty" data-result-empty>
+                <div class="radar-visual" aria-hidden="true">
+                  <i></i><i></i><i></i><span></span><b></b>
+                </div>
+                <h4>아직 분석된 장애가 없습니다</h4>
+                <p>왼쪽에 장애 정보를 입력하면<br />대응 우선순위가 여기에 정리됩니다.</p>
+                <ul>
+                  <li>원인 가설과 근거</li>
+                  <li>우선 확인 체크리스트</li>
+                  <li>완화 방안과 공지 초안</li>
+                </ul>
+              </div>
+
+              <div class="result-loading" data-result-loading hidden>
+                <div class="scan-loader" aria-hidden="true"><span></span></div>
+                <p class="panel-kicker">Analyzing signals</p>
+                <h4>장애 상황을 분석하고 있습니다</h4>
+                <p data-loading-message>로그와 최근 변경 사항의 연관성을 확인하는 중입니다.</p>
+                <div class="loading-steps" aria-hidden="true">
+                  <i class="is-done"></i><i class="is-active"></i><i></i><i></i>
+                </div>
+              </div>
+
+              <div class="result-content" data-result-content hidden>
+                <div class="report-overview">
+                  <div>
+                    <p class="panel-kicker">Incident summary</p>
+                    <h4 data-result-summary></h4>
+                  </div>
+                  <div class="severity-block">
+                    <span>예상 심각도</span>
+                    <strong data-result-severity></strong>
+                  </div>
+                </div>
+
+                <div class="report-section">
+                  <div class="report-title"><span>01</span><h5>가능한 원인과 판단 근거</h5></div>
+                  <div class="cause-list" data-result-causes></div>
+                </div>
+
+                <div class="report-grid">
+                  <div class="report-section">
+                    <div class="report-title"><span>02</span><h5>우선 확인 항목</h5></div>
+                    <ol class="check-list" data-result-checks></ol>
+                  </div>
+                  <div class="report-section">
+                    <div class="report-title"><span>03</span><h5>완화 및 롤백 방안</h5></div>
+                    <ul class="action-list" data-result-mitigations></ul>
+                  </div>
+                </div>
+
+                <div class="report-section communication-card">
+                  <div class="report-title"><span>04</span><h5>팀 공유용 공지 초안</h5></div>
+                  <p data-result-communication></p>
+                </div>
+
+                <div class="report-section additional-card">
+                  <div class="report-title"><span>05</span><h5>추가로 필요한 정보</h5></div>
+                  <ul class="tag-list" data-result-additional></ul>
+                </div>
+
+                <p class="result-disclaimer">
+                  AI가 제안한 참고 정보입니다. 실제 변경 전 시스템 상태와 담당자 승인을 확인하세요.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="guide-section section-shell" id="response-guide" data-section>
+        <div class="container">
+          <div class="section-heading split-heading">
+            <div>
+              <p class="eyebrow"><span></span> Response guide</p>
+              <h2>빠르게 움직이되,<br />순서는 지키세요.</h2>
+            </div>
+            <p>장애 대응의 목표는 추측을 늘리는 것이 아니라, 영향을 줄이고 확인 가능한 사실을 빠르게 확보하는 것입니다.</p>
+          </div>
+
+          <div class="response-flow">
+            <article><span>01</span><div class="flow-icon">◎</div><h3>탐지</h3><p>발생 시점과 사용자 증상을 기록하고 모니터링 신호를 확인합니다.</p></article>
+            <article><span>02</span><div class="flow-icon">⌁</div><h3>범위 파악</h3><p>영향받는 기능, 사용자, 환경을 구분해 장애 범위를 좁힙니다.</p></article>
+            <article><span>03</span><div class="flow-icon">△</div><h3>안정화</h3><p>최근 변경과 시스템 상태를 검토한 뒤 되돌릴 수 있는 완화를 우선합니다.</p></article>
+            <article><span>04</span><div class="flow-icon">◇</div><h3>소통</h3><p>확인된 사실, 영향 범위, 다음 업데이트 시점을 팀에 공유합니다.</p></article>
+          </div>
+
+          <div class="guide-grid">
+            <article class="severity-guide guide-card">
+              <div class="card-heading">
+                <div><p class="panel-kicker">Severity matrix</p><h3>심각도 판단 기준</h3></div>
+                <span>제안값</span>
+              </div>
+              <div class="severity-table">
+                <div><strong class="sev sev-1">SEV-1</strong><p><b>Critical</b> 핵심 서비스 전체 중단, 데이터 손실 또는 광범위한 보안 영향 가능성</p></div>
+                <div><strong class="sev sev-2">SEV-2</strong><p><b>High</b> 핵심 기능의 심각한 성능 저하 또는 다수 사용자의 부분 장애</p></div>
+                <div><strong class="sev sev-3">SEV-3</strong><p><b>Medium</b> 일부 기능의 제한적 장애이며 우회 방법이 존재하는 상황</p></div>
+                <div><strong class="sev sev-4">SEV-4</strong><p><b>Low</b> 사용자 영향이 거의 없는 경미한 문제 또는 모니터링 필요</p></div>
+              </div>
+            </article>
+
+            <article class="safe-input guide-card">
+              <div class="card-heading">
+                <div><p class="panel-kicker">Safe input</p><h3>로그 입력 전 확인</h3></div>
+                <span class="shield-mark">✓</span>
+              </div>
+              <ul>
+                <li><span>01</span><p><strong>자격 증명 제거</strong>API 키, 토큰, 비밀번호와 쿠키를 삭제하세요.</p></li>
+                <li><span>02</span><p><strong>개인정보 비식별화</strong>이름, 이메일, IP 등 사용자를 식별할 정보는 가리세요.</p></li>
+                <li><span>03</span><p><strong>관찰한 사실 중심</strong>추측보다 시점, 오류율, 영향 범위와 변경 내역을 적으세요.</p></li>
+              </ul>
+              <p class="safe-note">OpsTriage는 시스템을 직접 변경하지 않습니다. 모든 운영 조치는 담당자가 검토하고 실행해야 합니다.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-section section-shell" id="about" data-section>
+        <div class="container about-grid">
+          <div class="about-intro">
+            <p class="eyebrow"><span></span> About OpsTriage</p>
+            <h2>AI는 판단을 대신하지 않고,<br />판단할 정보를 정리합니다.</h2>
+            <p>
+              OpsTriage는 장애 대응 경험이 적은 엔지니어와 소규모 팀이 첫 대응의
+              기준점을 빠르게 잡도록 돕는 학습형 프로젝트입니다.
+            </p>
+            <div class="tech-list" aria-label="기술 스택">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Python</span><span>OpenAI</span><span>Vercel</span>
+            </div>
+          </div>
+
+          <div class="faq-list">
+            <details open>
+              <summary>AI 결과를 바로 실행해도 되나요?<span></span></summary>
+              <p>아니요. 결과는 가능한 가설과 확인 순서를 정리한 참고 자료입니다. 실제 시스템 상태와 변경 영향을 담당자가 확인해야 합니다.</p>
+            </details>
+            <details>
+              <summary>입력한 장애 정보는 저장되나요?<span></span></summary>
+              <p>현재 버전은 별도 데이터베이스를 사용하지 않으며, 입력 내용을 서비스 자체에 저장하지 않습니다.</p>
+            </details>
+            <details>
+              <summary>어떤 정보를 입력하면 분석이 좋아지나요?<span></span></summary>
+              <p>발생 시점, 사용자 영향, 핵심 오류 메시지, 최근 배포 또는 설정 변경과 같이 확인 가능한 사실을 입력해주세요.</p>
+            </details>
+            <details>
+              <summary>분석 결과의 심각도는 확정값인가요?<span></span></summary>
+              <p>아니요. 입력 내용을 바탕으로 제안하는 값이며, 실제 영향 범위와 조직의 장애 기준에 따라 최종 판단해야 합니다.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true"><span></span></span><span>OpsTriage</span></a>
+          <p>Clarity in the first minutes of an incident.</p>
+        </div>
+        <p>AI 분석 결과는 참고 정보이며 최종 판단은 운영 담당자에게 있습니다.</p>
+        <span>© 2026 OpsTriage</span>
+      </div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite" data-toast></div>
+  </body>
+</html>
